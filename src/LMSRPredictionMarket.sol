@@ -82,10 +82,7 @@ contract LMSRPredictionMarket {
         return _b.mul((expYes.add(expNo)).ln()).unwrap();
     }
 
-    function _cost(
-        uint256 _qYes,
-        uint256 _qNo
-    ) internal view returns (uint256) {
+    function _cost(uint256 _qYes, uint256 _qNo) internal view returns (uint256) {
         UD60x18 _b = ud(b);
         UD60x18 qYes_ = ud(_qYes);
         UD60x18 qNo_ = ud(_qNo);
