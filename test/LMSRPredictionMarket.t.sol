@@ -89,7 +89,11 @@ contract LMSRPredictionMarketTest is Test {
         uint256 pYesBefore = market.priceYes();
 
         // Simulate buying YES shares
-        vm.store(address(market), bytes32(uint256(1)), bytes32(uint256(10 ether)));
+        vm.store(
+            address(market),
+            bytes32(uint256(1)),
+            bytes32(uint256(10 ether))
+        );
 
         uint256 pYesAfter = market.priceYes();
 
@@ -100,7 +104,11 @@ contract LMSRPredictionMarketTest is Test {
         uint256 amount = 10 ether; // 10 YES tokens
 
         // Simulate: qYES = 10, qNO = 0, b = 1000
-        vm.store(address(market), bytes32(uint256(1)), bytes32(uint256(10 ether)));
+        vm.store(
+            address(market),
+            bytes32(uint256(1)),
+            bytes32(uint256(10 ether))
+        );
 
         uint256 pYes = market.priceYes();
 
@@ -118,7 +126,11 @@ contract LMSRPredictionMarketTest is Test {
 
         // Hack storage to increase qYES
         // qYES is at slot 1
-        vm.store(address(market), bytes32(uint256(1)), bytes32(uint256(10 ether)));
+        vm.store(
+            address(market),
+            bytes32(uint256(1)),
+            bytes32(uint256(10 ether))
+        );
 
         uint256 newCost = market.cost();
         assertGt(newCost, initialCost);

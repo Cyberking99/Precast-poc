@@ -26,7 +26,7 @@ contract LMSRPredictionMarket {
         require(!resolved, "Market resolved");
         require(_amount > 0, "Amount must be > 0");
 
-        uint256 costBefore = _cost(qYES, qNO);
+        uint256 costBefore = cost(qYES, qNO);
 
         uint256 deltaQ = 0;
         uint256 step = 1e16; // 0.01 share per step
