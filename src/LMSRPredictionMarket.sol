@@ -13,6 +13,10 @@ contract LMSRPredictionMarket {
     bool public yesWon;
     bool public marketCreated;
 
+    constructor(uint256 _b) {
+        b = _b;
+    }
+
     function buyYes(uint256 _amount) public {}
 
     function buyNo(uint256 _amount) public {}
