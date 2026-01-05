@@ -21,4 +21,6 @@ contract LMSRPredictionMarket {
     function priceNo() public view returns (uint256 price_) {}
 
     function resolve(bool yesWins) public {}
+
+    function claim() public {}
 }
