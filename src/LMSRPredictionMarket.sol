@@ -15,4 +15,6 @@ contract LMSRPredictionMarket {
     function buyYes(uint256 _amount) public {}
 
     function buyNo(uint256 _amount) public {}
+
+    function priceYes() public view returns (uint256 price_) {}
 }
