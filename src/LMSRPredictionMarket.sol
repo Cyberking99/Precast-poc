@@ -15,6 +15,7 @@ contract LMSRPredictionMarket {
 
     constructor(uint256 _b) {
         b = _b;
+        marketCreated = true;
     }
 
     function buyYes(uint256 _amount) public {}
