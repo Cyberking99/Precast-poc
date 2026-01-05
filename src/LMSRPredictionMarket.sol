@@ -14,6 +14,8 @@ contract LMSRPredictionMarket {
     bool public marketCreated;
 
     constructor(uint256 _b) {
+        require(b > 0, "b must be > 0");
+
         b = _b;
         marketCreated = true;
     }
