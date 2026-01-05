@@ -22,7 +22,28 @@ contract LMSRPredictionMarket {
         marketCreated = true;
     }
 
-    function buyYes(uint256 _amount) public {}
+    function buyYes(uint256 _amount) public {
+        require(!resolved, "Market resolved");
+        require(_amount > 0, "Amount must be > 0");
+
+        uint256 costBefore = _cost(qYES, qNO);
+
+        uint256 deltaQ = 0;
+        uint256 step = 1e16; // 0.01 share per step
+
+        while (true) {
+            uint256 newCost = cost(qYES + deltaQ + step, qNO);
+            if (newCost - costBefore > _amount) {
+                break;
+            }
+            deltaQ += step;
+        }
+
+        require(deltaQ > 0, "Amount too small");
+
+        qYES += deltaQ;
+        yesShares[msg.sender] += deltaQ;
+    }
 
     function buyNo(uint256 _amount) public {}
 
