@@ -11,6 +11,7 @@ contract LMSRPredictionMarket {
 
     bool public resolved;
     bool public yesWon;
+    bool public marketCreated;
 
     function buyYes(uint256 _amount) public {}
 
