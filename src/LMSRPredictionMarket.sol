@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { UD60x18, ud } from "@prb/math/UD60x18.sol";
+import {UD60x18, ud} from "@prb/math/UD60x18.sol";
 
 contract LMSRPredictionMarket {
     uint256 public b;
@@ -32,7 +32,7 @@ contract LMSRPredictionMarket {
 
     function cost() public view returns (uint256) {
         // C(q) = b * ln(e^(qYES/b) + e^(qNO/b))
-        
+
         UD60x18 _b = ud(b);
         UD60x18 _qYes = ud(qYES);
         UD60x18 _qNo = ud(qNO);
@@ -46,5 +46,4 @@ contract LMSRPredictionMarket {
     function resolve(bool yesWins) public {}
 
     function claim() public {}
-    
 }
