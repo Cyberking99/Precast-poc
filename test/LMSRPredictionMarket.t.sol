@@ -63,7 +63,54 @@ contract LMSRPredictionMarketTest is Test {
         uint256 cost = market.cost();
 
         // assertAge(cost, expected); // Alias for assertEq but "approx" in spirit if we had drift
+        // assertAge(cost, expected); // Alias for assertEq but "approx" in spirit if we had drift
         assertApproxEqAbs(cost, expected, 1e10);
+    }
+
+    function testInitialPrices() public {
+        // Initial state: qYes = 0, qNo = 0
+        // P_yes = e^0 / (e^0 + e^0) = 1 / 2 = 0.5
+        uint256 pYes = market.priceYes();
+        uint256 pNo = market.priceNo();
+
+        assertEq(pYes, 0.5 ether);
+        assertEq(pNo, 0.5 ether);
+    }
+
+    function testPriceSumToOne() public {
+        uint256 pYes = market.priceYes();
+        uint256 pNo = market.priceNo();
+
+        // 0.5 + 0.5 = 1.0
+        assertEq(pYes + pNo, 1 ether);
+    }
+
+    function testPriceIncreasesWithPurchase() public {
+        uint256 pYesBefore = market.priceYes();
+
+        // Simulate buying YES shares
+        vm.store(address(market), bytes32(uint256(1)), bytes32(uint256(10 ether)));
+
+        uint256 pYesAfter = market.priceYes();
+
+        assertGt(pYesAfter, pYesBefore);
+    }
+
+    function testPriceAfterBuying10Yes() public {
+        uint256 amount = 10 ether; // 10 YES tokens
+
+        // Simulate: qYES = 10, qNO = 0, b = 1000
+        vm.store(address(market), bytes32(uint256(1)), bytes32(uint256(10 ether)));
+
+        uint256 pYes = market.priceYes();
+
+        // P_yes = e^0.01 / (e^0.01 + e^0)
+        // e^0.01 approx 1.01005
+        // P_yes = 1.01005 / 2.01005 approx 0.5025
+
+        console.log("Price YES after 10 shares:", pYes);
+        assertGt(pYes, 0.5 ether);
+        assertApproxEqAbs(pYes, 0.5025 ether, 0.0001 ether);
     }
 
     function testCostIncreasesWithShares() public {

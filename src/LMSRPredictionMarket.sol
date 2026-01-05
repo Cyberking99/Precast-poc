@@ -26,9 +26,27 @@ contract LMSRPredictionMarket {
 
     function buyNo(uint256 _amount) public {}
 
-    function priceYes() public view returns (uint256 price_) {}
+    function priceYes() public view returns (uint256) {
+        UD60x18 _b = ud(b);
+        UD60x18 _qYes = ud(qYES);
+        UD60x18 _qNo = ud(qNO);
 
-    function priceNo() public view returns (uint256 price_) {}
+        UD60x18 expYes = _qYes.div(_b).exp();
+        UD60x18 expNo = _qNo.div(_b).exp();
+
+        return expYes.div(expYes.add(expNo)).unwrap();
+    }
+
+    function priceNo() public view returns (uint256) {
+        UD60x18 _b = ud(b);
+        UD60x18 _qYes = ud(qYES);
+        UD60x18 _qNo = ud(qNO);
+
+        UD60x18 expYes = _qYes.div(_b).exp();
+        UD60x18 expNo = _qNo.div(_b).exp();
+
+        return expNo.div(expYes.add(expNo)).unwrap();
+    }
 
     function cost() public view returns (uint256) {
         // C(q) = b * ln(e^(qYES/b) + e^(qNO/b))
